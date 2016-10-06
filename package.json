@@ -1,0 +1,17 @@
+{
+  "name": "emcloudcode",
+  "version": "1.0.0",
+  "description": "Event Manager Cloud Code server",
+  "main": "emcloudcode.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Robert Sliwa",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "request": "^2.69.0",
+    "underscore": "^1.8.3"
+  }
+}

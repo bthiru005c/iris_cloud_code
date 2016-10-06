@@ -1,0 +1,12 @@
+[{
+    "triggerType": "afterEvent",
+    "eventType": "txtMessage",
+    "functionName": "notifyOnTextMessageEvent",
+    "functionCode": "textmsgevent.js"
+},
+{
+    "triggerType": "afterEvent",
+    "eventType": "testEvent",
+    "functionName": "notifyOnTestEvent",
+    "functionCode": "testevent.js"
+}]
