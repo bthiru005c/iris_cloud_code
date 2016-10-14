@@ -1,0 +1,43 @@
+#!/usr/bin/env node
+var logger = require('../lib/logwinston.js')
+	, app = require('../emcloudcode')
+	, http = require('http');
+
+var ipv4_addr = app.get('ipv4_addr');
+var ipv6_addr = app.get('ipv6_addr');
+var port = app.get('port');
+
+var ssl_enabled = app.get('ssl_enabled');
+if (ssl_enabled) {
+	var fs = require('fs');
+	var https = require('https');
+	var privateKey  = fs.readFileSync(app.get('ssl_private_key'), 'utf8');
+	var certificate = fs.readFileSync(app.get('ssl_certificate'), 'utf8');
+	var credentials = {key: privateKey, cert: certificate};
+
+	if (ipv4_addr != 0) {
+		var httpV4Server = https.createServer(credentials, app);
+		httpV4Server.listen(port, ipv4_addr, function() {
+			logger.info('Express server listening on ' + ipv4_addr + ':' + port);
+		});
+	}
+	if (ipv6_addr != 0) {
+		var httpV6Server = https.createServer(credentials, app);
+		httpV6Server.listen(port, ipv6_addr, function() {
+			logger.info('Express server listening on ' + ipv6_addr + ':' + port);
+		});
+	}
+} else {
+	if (ipv4_addr != 0) {
+		var httpV4Server = http.createServer(app);
+		httpV4Server.listen(port, ipv4_addr, function() {
+			logger.info('Express server listening on ' + ipv4_addr + ':' + port);
+		});
+	}
+	if (ipv6_addr != 0) {
+		var httpV6Server = http.createServer(app);
+		httpV6Server.listen(port, ipv6_addr, function() {
+			logger.info('Express server listening on ' + ipv6_addr + ':' + port);
+		});
+	}
+}

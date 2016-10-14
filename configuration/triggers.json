@@ -1,12 +1,5 @@
 [{
-    "triggerType": "afterEvent",
-    "eventType": "txtMessage",
-    "functionName": "notifyOnTextMessageEvent",
-    "functionCode": "textmsgevent.js"
-},
-{
-    "triggerType": "afterEvent",
-    "eventType": "testEvent",
-    "functionName": "notifyOnTestEvent",
-    "functionCode": "testevent.js"
+    "appDomain": "tel.comcast.net",
+    "eventType": "firstparticipantjoined",
+    "scriptFile": "/home/centos/iris_cloud_code/scripts/xmpp.js"
 }]
