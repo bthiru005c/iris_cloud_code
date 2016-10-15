@@ -90,7 +90,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // APIs
-app.post('/event', api.processEvent);
+app.post('/v1/event', api.processEvent);
 
 var handleShutdown = function() {
 	logger.info('IRIS Cloud Code server shutting down...');

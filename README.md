@@ -7,7 +7,10 @@
 #### Description
 ```sh
 	This API is called, mostly, by the Event Manager. Depending on the app_domain and evnet_type
-	a specific script (javascript) is executed. 
+	a specific script (javascript) is executed.
+	Separately, cloud code will maintain a repository of scripts associated with app domain
+	and event type. When comsumers call this API, the script associated with app_domain and
+	event_type, if present, is executed.
 	The main use case is the scripts will process the user_data and publish topics to the 
 	Notification Manager which inturn will post a notification to the subscriber.
 ```
