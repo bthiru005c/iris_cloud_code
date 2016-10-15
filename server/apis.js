@@ -16,8 +16,10 @@ exports.processEvent = function(req, res) {
 	}
 	// process.nextTick() defers the function to  a completely new stack
 	// Also allows the process to process other I/O bound requests
-	logger.info(irisEventTriggers.getTrigger(req.body.app_domain, req.body.event_type));
-	process.nextTick(irisEventTriggers.fireTrigger, req.body);
+	scriptFile = irisEventTriggers.getTrigger(req.body.app_domain, req.body.event_type);
+	if (scriptFile || (typeof scriptFile === 'undefined')) {
+		process.nextTick(irisEventTriggers.fireTrigger, req.body);
+	}
 	res.sendStatus(200);              
 };
                                                                        
