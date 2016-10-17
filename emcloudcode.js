@@ -74,10 +74,8 @@ if (config.triggers_file) {
 	var jsonTriggers = JSON.parse(triggers);
 	if (jsonTriggers instanceof Array) {
 		for(var i = 0 , len = jsonTriggers.length ; i < len ; i++){
-			logger.info(jsonTriggers[i].scriptFile);
 			require(jsonTriggers[i].scriptFile)(scripts_modules);
 			irisEventTriggers.addTrigger(jsonTriggers[i].appDomain, jsonTriggers[i].eventType, jsonTriggers[i].scriptFile);
-			scripts_modules[jsonTriggers[i].scriptFile]();
 		}
 	} else {
 		logger.error(config.triggers_file + "does not contain array of JSON objects");

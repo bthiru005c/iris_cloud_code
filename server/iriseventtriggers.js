@@ -21,8 +21,8 @@ function fireTrigger(payLoad) {
 	var key = payLoad.app_domain + payLoad.event_type;
 	if (triggerStore && triggerStore[key]) {
 		var script = triggerStore[key];
-		logger.info("script is " + script);
-		em.scripts_modules[script]();
+		logger.debug("script is " + script);
+		em.scripts_modules[script](payLoad);
 	} else {
 		logger.info(payLoad);
 	}

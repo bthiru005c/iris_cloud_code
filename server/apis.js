@@ -13,6 +13,7 @@ exports.processEvent = function(req, res) {
 	if ( (!req.body.app_domain) || (!req.body.event_type) ) {
 		logger.error("processEvent - Invalid request");
 		res.status(400).send('Incomplete request')
+		return
 	}
 	// process.nextTick() defers the function to  a completely new stack
 	// Also allows the process to process other I/O bound requests
