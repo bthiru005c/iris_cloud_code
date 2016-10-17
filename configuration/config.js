@@ -8,6 +8,7 @@ module.exports = {
 		ssl_private_key: '/home/centos/certs/poc.key',		// absolute/relative PATH + key file - relative PATH starts from the base directory
 		ssl_certificate: '/home/centos/certs/poc.crt',	// absolute/relative PATH + cert file - relative PATH starts from the base directory		
 		event_manager: 'https://st-evmgr-asb-001.poc.sys.comcast.net',
+		notification_manager: 'st-nm-asb-001.poc.sys.comcast.net',
 		triggers_file: '/home/centos/iris_cloud_code/configuration/triggers.json',
 		// Logging configuration
 		log: {
