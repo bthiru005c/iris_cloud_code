@@ -5,11 +5,12 @@ module.exports = {
 		interface : 'eth0', // or ethernet interface. ex: eth0, eth1, lo...
 		port : '443',	// MUST specify port if ssl_enabled is false, If true, the port is ALWAYS 443
 		ssl_enabled : true,	// if true, interface CANNOT be 'lo'
-		ssl_private_key: '/home/centos/certs/poc.key',		// absolute/relative PATH + key file - relative PATH starts from the base directory
-		ssl_certificate: '/home/centos/certs/poc.crt',	// absolute/relative PATH + cert file - relative PATH starts from the base directory		
-		event_manager: 'https://st-evmgr-asb-001.poc.sys.comcast.net',
+		ssl_private_key: '/opt/certs/rtc.key',		// absolute/relative PATH + key file - relative PATH starts from the base directory
+		ssl_certificate: '/opt/certs/rtc.crt',	// absolute/relative PATH + cert file - relative PATH starts from the base directory		
+		event_manager: 'st-evmgr-asb-001.poc.sys.comcast.net',
 		notification_manager: 'st-nm-asb-001.poc.sys.comcast.net',
 		triggers_file: '/home/centos/iris_cloud_code/configuration/triggers.json',
+		jwt: 'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsIng1dSI6Imh0dHBzOi8vc3QtaXJpc2F1dGgtd2NkY2MtMDAxLnBvYy5zeXMuY29tY2FzdC5uZXQvand0a2V5cy9iSmplWEVwaXFYTUJBSnB1RHIwa3NnN3BrVUNRbE5sVi5wdWIifQ.eyJhcHBfa2V5IjoiYkpqZVhFcGlxWE1CQUpwdURyMGtzZzdwa1VDUWxObFYiLCJkb21haW4iOiJJcmlzVmlkZW9DaGF0LmNvbWNhc3QuY29tIiwiZXhwIjoxNDY4Mjc0NjAxLCJpYXQiOjE0NjgyNjc0MDEsImlkIjoic2Vhc29uczIwMTQiLCJpc3MiOiJpcmlzYXV0aCIsIm5hbWUiOiJhbm9ueW1vdXMiLCJzdWIiOiJzZWFzb25zMjAxNCIsInR5cGUiOiJBbm9ueW1vdXMiLCJ1c2VyX2lkIjoic2Vhc29uczIwMTQifQ.cvFua3YAjvXr85poVBonTuV4O6e6MSvqRFK6jaGdgQ9VcczfKqfoTTJ-5s_xbBjGtBmdZCc2uN4nGiIE-Qj3sQ'
 		// Logging configuration
 		log: {
 			console: {
