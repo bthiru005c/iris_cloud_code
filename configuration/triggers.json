@@ -1,5 +1,5 @@
 [{
-    "appDomain": "irisvideochat.comcast.com",
+    "appDomain": "irisconnect.comcast.com",
     "eventType": "firstxmppparticipantjoined",
     "scriptFile": "/home/centos/iris_cloud_code/scripts/xmpp.js"
 }]
