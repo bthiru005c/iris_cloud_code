@@ -21,50 +21,12 @@ if (config.ssl_enabled) {
 // certificates
 app.set('ssl_enabled', config.ssl_enabled);
 if (config.ssl_enabled) {
-	if (config.interface === 'lo') {
-		logger.error("Interface cannot be localhost if ssl is enabled in config. IRIS Cloud Code Server Exiting....");
-		process.exit(1);
-	} else {
-		app.set('port', 443);
-		app.set('ssl_private_key', config.ssl_private_key);
-		app.set('ssl_certificate', config.ssl_certificate);
-	}
+	app.set('port', 443);
+	app.set('ssl_private_key', config.ssl_private_key);
+	app.set('ssl_certificate', config.ssl_certificate);
 } else {
 	// default port is 9000
 	app.set('port', process.env.PORT || 9000);
-}
-// Server address
-var intf; // undefined 
-var localInterfaces = require('os').networkInterfaces();
-var interface = eval('localInterfaces.' + config.interface);
-var ipv4_address = 0;
-var ipv6_address = 0;
-if (interface) {
-	// Getting the IPv4 and IPv6 address of an interface in separate 
-	// loops. It has been observed that multiple IPv6 addresses can be specified
-	// for an interface, in dual stack environments
-	// Get the IPv4 address of the specific interface
-	for (var i=0; i< interface.length; i++) {
-		if (interface[i].family.toLowerCase() == "ipv4") {
-			ipv4_address = interface[i].address;
-			logger.info("ipv4_address: " + ipv4_address);
-			break;
-		}
-	}
-	// Get the IPv6 address of the specific interface
-	for (var i=0; i< interface.length; i++) {
-		if (interface[i].family.toLowerCase() == "ipv6") {
-			ipv6_address = interface[i].address;
-			logger.info("ipv6_address: " + ipv6_address);
-			break;
-		}
-	}
-	app.set('port', config.port);
-	app.set('ipv4_addr', ipv4_address);
-	app.set('ipv6_addr', ipv6_address);
-} else {
-	logger.error("Interface name " + config.interface + " in config file does not exist. IRIS Cloud Code Server Exiting....");
-	process.exit(2);
 }
 
 // read triggers file
