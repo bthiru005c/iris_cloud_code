@@ -20,7 +20,13 @@ function firstXmppParticipantJoined(payload) {
 		};
  		request(em_options, function (error, response, em_resp_body) {
 			if (!error && response.statusCode == 200) {
-				var em_resp = JSON.parse(em_resp_body); 
+				var em_resp ;
+				try {
+					em_resp = JSON.parse(em_resp_body); 
+				} catch (e) {
+					logger.error("JSON.parse() exception when parsing : ", em_resp_body);
+					return;
+				}
 				if ( (!em_resp.room_id) 
 							|| (!em_resp.rtc_server) 
 							|| (!em_resp.to_routing_ids) 
@@ -29,7 +35,13 @@ function firstXmppParticipantJoined(payload) {
 					logger.error("Invalid Payload Received");
 					return
 				}
-				var user_data = JSON.parse(em_resp.userdata);
+				var user_data ;
+				try {
+					user_data = JSON.parse(em_resp.userdata); 
+				} catch (e) {
+					logger.error("JSON.parse() exception when parsing : ", em_resp.userdata);
+					return;
+				}
 				if (!user_data.notification) {
 					logger.error("No notification object available");
 					return
