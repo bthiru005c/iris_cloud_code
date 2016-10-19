@@ -42,13 +42,16 @@ function firstXmppParticipantJoined(payload) {
 					}
 					var topic = encodeURIComponent(user_data.notification.topic + "/" + em_resp.to_routing_ids[i].routing_id);
 					logger.info(topic);
-					var nm_request_body = {
-						room_id: em_resp.room_id,
-						rtc_server: em_resp.rtc_server,
-						xmpp_token: em_resp.to_routing_ids[i].xmpp_token,
-						xmpp_token_expiry_time: em_resp.to_routing_ids[i].xmpp_token_expiry_time,
-						user_data: em_resp.userdata
-					};
+					var nm_request_body = { 
+						payload : {
+							routing_id: em_resp.to_routing_ids[i].routing_id,
+							room_id: em_resp.room_id,
+							rtc_server: em_resp.rtc_server,
+							xmpp_token: em_resp.to_routing_ids[i].xmpp_token,
+							xmpp_token_expiry_time: em_resp.to_routing_ids[i].xmpp_token_expiry_time,
+							user_data: em_resp.userdata
+						}
+					}
 //					var nm_options_path = "/v1/topic/" + topic;
 //					var nm_body  = JSON.stringify(nm_request_body)
 //					var nm_options = {
