@@ -113,6 +113,6 @@ function firstXmppParticipantJoined(payload) {
 module.exports = function(scripts_modules) {
 	// the key in this dictionary can be whatever you want
 	// just make sure it won't override other modules
-	scripts_modules['../scripts/xmpp.js'] = firstXmppParticipantJoined;
+	scripts_modules['./scripts/xmpp.js'] = firstXmppParticipantJoined;
 };
 
