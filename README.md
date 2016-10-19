@@ -30,7 +30,7 @@ module.exports = {
 			plaintext: {
 				enabled: true,
 				level: 'info',
-				filename: 'nm.log.log',
+				filename: 'iriscc.log',
 				dirname: './log',
 				maxsize: 10485760    // 10mb before rotating to another file
 			}
