@@ -3,7 +3,7 @@ services:
   image: iriscc:1.0
   # DO NOT tamper with this command
   working_dir: /usr/local/iris_cloud_code
-  command: npm start
+  command: node bin/www
   volumes:
     # [HOST Path:CONTAINER Path]
     # NOTE: IF NEEDED, ONLY HOST PATH CAN BE CHANGED. DONOT CHANGE THE CONTAINER PATH
