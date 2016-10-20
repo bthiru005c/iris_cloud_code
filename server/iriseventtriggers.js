@@ -1,5 +1,5 @@
 "use strict";
-var em = require('../emcloudcode')
+var em = require('../cloudcode')
 	, logger = require('../lib/logwinston.js');
 
 let triggerStore = {};

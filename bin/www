@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 var logger = require('../lib/logwinston.js')
-	, app = require('../emcloudcode')
+	, app = require('../cloudcode')
 	, http = require('http');
 
 var port = app.get('port');
