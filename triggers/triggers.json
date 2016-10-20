@@ -1,5 +1,5 @@
 [{
     "appDomain": "irisconnect.comcast.com",
     "eventType": "firstxmppparticipantjoined",
-    "scriptFile": "./scripts/xmpp.js"
+    "scriptFile": "/usr/local/iris_cloud_code/scripts/xmpp.js"
 }]
