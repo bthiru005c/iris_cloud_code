@@ -31,7 +31,7 @@ if (config.ssl_enabled) {
 
 // read triggers file
 if (config.triggers_file) {	
-	var triggers = fs.readFileSync(config.triggers_file)
+	var triggers = fs.readFileSync("./triggers/triggers.json")
 	// unmarshall to JSON type
 	var jsonTriggers = JSON.parse(triggers);
 	if (jsonTriggers instanceof Array) {
