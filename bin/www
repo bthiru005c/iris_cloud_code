@@ -19,6 +19,6 @@ if (ssl_enabled) {
 	httpServer = http.createServer(app);
 }
 
-httpServer.listen(port, function() {
+httpServer.listen(port, '0.0.0.0', function() {
 	logger.info('Express server listening on port :' + port);
 });	
