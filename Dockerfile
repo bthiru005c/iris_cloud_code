@@ -19,6 +19,7 @@ RUN chmod 700 /root/.ssh/id_rsa && echo "Host github.com\n\tStrictHostKeyCheckin
 
 # Install Event Manager
 WORKDIR /usr/local
-RUN git clone git@github.com:Comcast/iris_cloud_code.git
+#RUN git clone git@github.com:Comcast/iris_cloud_code.git
+RUN git clone -b v0.7 git@github.com:Comcast/iris_identity_manager.git
 WORKDIR /usr/local/iris_cloud_code
 RUN npm install

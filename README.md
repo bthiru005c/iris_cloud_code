@@ -17,7 +17,6 @@ module.exports = {
 		ssl_certificate: '/opt/certs/rtc.crt',                                      <--- absolute/relative PATH + cert file - relative PATH starts from the base directory		
 		event_manager: '<FQDN>',                                                    <--- FQDN OF EVENT MANAGER - DO NOT START WITH SCHEME (HTTP:// or HTTPS://)
 		notification_manager: '<FQDN>',                                             <--- FQDN OF NOTIFICATION MANAGER - DO NOT START WITH SCHEME (HTTP:// or HTTPS://)
-		triggers_file: '/usr/local/iris_cloud_code/triggers/triggers.json',         <--- DO NOT CHANGE
 		jwt: ''                                                                     <--- DEFAULT JWT USED TO CALL EM AND NM APIS. FOR TESTING PURPOSES ONLY
 		// Logging configuration
 		log: {                                                                      <--- DO NOT TOUCH. LEAVE THIS ENTIRE OBJECT AS IS
