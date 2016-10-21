@@ -60,6 +60,32 @@ var handleShutdown = function() {
 process.on('SIGTERM', handleShutdown);
 process.on('SIGINT', handleShutdown);
 
+// catch 404 and forward to error handler
+app.use((req, res, next) => {
+  const err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+  app.use((err, req, res, next) => {
+    res.status(err.status || 500);
+    res.send();
+  });
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.send();
+});
+
+
 module.exports = app;
 /* 
  *  export the current value of best_xmpp_server
