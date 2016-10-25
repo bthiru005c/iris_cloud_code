@@ -30,18 +30,16 @@ if (config.ssl_enabled) {
 }
 
 // read triggers file
-if (config.triggers_file) {	
-	var triggers = fs.readFileSync("./triggers/triggers.json")
-	// unmarshall to JSON type
-	var jsonTriggers = JSON.parse(triggers);
-	if (jsonTriggers instanceof Array) {
-		for(var i = 0 , len = jsonTriggers.length ; i < len ; i++){
-			require(jsonTriggers[i].scriptFile)(scripts_modules);
-			irisEventTriggers.addTrigger(jsonTriggers[i].appDomain, jsonTriggers[i].eventType, jsonTriggers[i].scriptFile);
-		}
-	} else {
-		logger.error(config.triggers_file + "does not contain array of JSON objects");
+var triggers = fs.readFileSync("./triggers/triggers.json")
+// unmarshall to JSON type
+var jsonTriggers = JSON.parse(triggers);
+if (jsonTriggers instanceof Array) {
+	for(var i = 0 , len = jsonTriggers.length ; i < len ; i++){
+		require(jsonTriggers[i].scriptFile)(scripts_modules);
+		irisEventTriggers.addTrigger(jsonTriggers[i].appDomain, jsonTriggers[i].eventType, jsonTriggers[i].scriptFile);
 	}
+} else {
+	logger.error("./triggers/triggers.json does not contain array of JSON objects");
 }
 
 // 
