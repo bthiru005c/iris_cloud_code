@@ -15,7 +15,7 @@ function firstXmppParticipantJoined(payload) {
 		var em_options = {
 			url: "https://" + config.event_manager + "/events/rooteventinfo/rootnodeid/" + payload.root_node_id,
 			headers: {
-    		'Authorization': config.jwt
+    		'Authorization': "Bearer " + config.jwt
 			}
 		};
  		request(em_options, function (error, response, em_resp_body) {
