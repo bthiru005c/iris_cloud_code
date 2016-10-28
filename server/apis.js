@@ -13,6 +13,7 @@ exports.processEvent = function(req, res) {
 		res.status(400).send('Incomplete request')
 		return
 	}
+	logger.info(req.body);
 	// process.nextTick() defers the function to  a completely new stack
 	// Also allows the process to process other I/O bound requests
 	if (typeof irisEventTriggers.getTrigger(req.body.app_domain, req.body.event_type) != 'undefined') {
