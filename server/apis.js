@@ -21,4 +21,12 @@ exports.processEvent = function(req, res) {
 	}
 	res.sendStatus(200);              
 };
-                                                                       
+                
+// get software version
+exports.version = function(req, res) {
+	var ver = {
+		"version": "IRIS Cloud Code v0.11"
+	};
+	res.status(200).json(JSON.stringify(ver));
+};                          
+                             

@@ -50,6 +50,9 @@ app.use(cors());
 // APIs
 app.post('/v1/event', api.processEvent);
 
+// GET 
+app.get('/v1/version', api.version);
+
 var handleShutdown = function() {
 	logger.info('IRIS Cloud Code server shutting down...');
 	process.exit(0);

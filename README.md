@@ -70,3 +70,29 @@ module.exports = {
 
 200 OK 
 
+### GET /v1/version
+
+#### Description
+```sh
+	This API serves 2 purposes
+	1. Health Check - A 200 OK response indicates if Cloud Code is running.
+	2. Version - Returns version in response body
+```
+
+#### Request
+
+```sh
+	No request parameters.
+```
+
+#### Response
+
+200 OK and the following JSON object.
+
+```sh
+	----------------------------------------------------------------------------------------------
+	Property          Type          Description
+	----------------------------------------------------------------------------------------------
+	version           string        IRIS Cloud Code version.
+```
+
