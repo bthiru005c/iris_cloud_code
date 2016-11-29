@@ -1,12 +1,12 @@
 {
-  "name": "emcloudcode",
-  "version": "1.0.0",
-  "description": "Event Manager Cloud Code server",
-  "main": "emcloudcode.js",
+  "name": "cloudcode",
+  "version": "1.0.1",
+  "description": "Cloud Code server",
+  "main": "cloudcode.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Robert Sliwa",
+  "author": "Harsha Bellur & Robert Sliwa",
   "license": "SEE LICENSE IN LICENSE.txt",
 	"scripts": {
 		"start": "forever start --minUptime 1000 --spinSleepTime 1000 ./bin/www",

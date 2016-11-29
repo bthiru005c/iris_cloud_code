@@ -9,7 +9,7 @@ var irisEventTriggers = require('./iriseventtriggers')
  */                                                                                
 exports.processEvent = function(req, res) {                                      
 	// 1. Assuming password is already encrypted, create a document                  
-	if ( (!req.body.app_domain) || (!req.body.event_type) ) {
+	if ( (!req.body.app_domain) || (!req.body.event_type) || (!req.body.root_event_room_id) || (!req.body.root_event_type) || (!req.body.root_event_updated_at) ) {
 		res.status(400).send('Incomplete request')
 		return
 	}

@@ -11,9 +11,9 @@ var env = process.env.NODE_ENV || 'development'
 function firstXmppParticipantJoined(payload) {
 	
 	logger.info(payload);
-	if (payload && payload.root_node_id)  { 
+	if (payload && payload.root_event_room_id && payload.root_event_type && payload.root_event_updated_at)  { 
 		var em_options = {
-			url: "https://" + config.event_manager + "/events/rooteventinfo/rootnodeid/" + payload.root_node_id,
+			url: "https://" + config.event_manager + "/events/rooteventinfo/roomid/" + payload.root_event_room_id + "/eventtype/" + payload.root_event_type + "/time/" + payload.root_event_updated_at,
 			headers: {
     		'Authorization': "Bearer " + config.jwt
 			}
