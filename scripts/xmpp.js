@@ -10,7 +10,7 @@ var env = process.env.NODE_ENV || 'development'
 
 function firstXmppParticipantJoined(payload) {
 	
-	logger.info(payload);
+	logger.info("Traceid=" + payload.trace_id + ", Trigger=true, Message=app_domain=" + payload.app_domain + " event_type=" + payload.event_type + " root_event_room_id=" + payload.root_event_room_id + " root_event_type=" + payload.root_event_type + " root_event_updated_at=" + payload.root_event_updated_at + " userdata=" + payload.userdata);
 	if (payload && payload.root_event_room_id && payload.root_event_type && payload.root_event_updated_at)  { 
 		var em_options = {
 			url: "https://" + config.event_manager + "/events/rooteventinfo/roomid/" + payload.root_event_room_id + "/eventtype/" + payload.root_event_type + "/time/" + payload.root_event_updated_at,
@@ -32,7 +32,7 @@ function firstXmppParticipantJoined(payload) {
 							|| (!em_resp.to_routing_ids) 
 							|| (!em_resp.to_routing_ids instanceof Array)
 							|| (!em_resp.userdata) ) {
-					logger.error("Invalid Payload Received");
+					logger.error("Traceid=" + payload.trace_id + ", Message=Invalid Payload Received");
 					return
 				}
 				var user_data ;
@@ -43,7 +43,7 @@ function firstXmppParticipantJoined(payload) {
 					return;
 				}
 				if (!user_data.notification) {
-					logger.error("No notification object available");
+					logger.error("Traceid=" + payload.trace_id + ", Message=No notification object available");
 					return
 				}
 				
@@ -97,14 +97,14 @@ function firstXmppParticipantJoined(payload) {
 						body: JSON.stringify(nm_request_body)
 					})
 					.then (function(res) {
-						logger.info(res.status);
+						logger.info("Traceid=" + payload.trace_id + ", Message=Response from Event Manager=" + res.status);
 					})
 					.catch(function(err) {
-						logger.info(err);
+						logger.info("Traceid=" + payload.trace_id + ", Message=Error in attempt to send request to Event Manager=" + err);
 					});
 				}
 			} else {
-				logger.error(response.statusCode);
+				logger.error("Traceid=" + payload.trace_id + ", Message=Response from Event Manager=" + response.statusCode);
 			}
 		});
 	}
