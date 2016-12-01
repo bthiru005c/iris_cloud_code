@@ -13,11 +13,17 @@ exports.processEvent = function(req, res) {
 		res.status(400).send('Incomplete request')
 		return
 	}
-	logger.debug(req.body);
+	var trace_id = "-1";
+	if (req.headers['Trace-Id']) {
+		trace_id = req.headers['Trace-Id'];
+	}
+	
 	// process.nextTick() defers the function to  a completely new stack
 	// Also allows the process to process other I/O bound requests
 	if (typeof irisEventTriggers.getTrigger(req.body.app_domain, req.body.event_type) != 'undefined') {
 		process.nextTick(irisEventTriggers.fireTrigger, req.body);
+	} else {
+		logger.info("Traceid=" + trace_id + ", Message=Not a trigger ; " app_domain=" + req.body.app_domain + " event_type=" + req.body.event_type + " root_event_room_id=" + req.body.root_event_room_id + " root_event_type=" + req.body.root_event_type + " root_event_updated_at=" + req.body.root_event_updated_at);
 	}
 	res.sendStatus(200);              
 };
@@ -25,7 +31,7 @@ exports.processEvent = function(req, res) {
 // get software version
 exports.version = function(req, res) {
 	var ver = {
-		"version": "IRIS Cloud Code v0.11"
+		"version": "IRIS Cloud Code v1.0.2"
 	};
 	res.status(200).json(JSON.stringify(ver));
 };                          
