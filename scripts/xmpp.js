@@ -104,7 +104,11 @@ function firstXmppParticipantJoined(payload) {
 					});
 				}
 			} else {
-				logger.error("Traceid=" + payload.trace_id + ", Message=Response from Event Manager=" + response.statusCode);
+				if error {
+					logger.error("Traceid=" + payload.trace_id + ", Message=" + error);
+				} else {
+					logger.error("Traceid=" + payload.trace_id + ", Message=Response from Event Manager=" + response.statusCode);
+				}
 			}
 		});
 	}
