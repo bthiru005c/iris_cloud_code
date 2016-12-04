@@ -34,9 +34,9 @@ function firstXmppParticipantJoined(payload) {
 				// parse payload.root_event_userdata to extract notification JSON blob
 				var root_event_user_data ;
 				try {
-					user_data = JSON.parse(payload.root_event_userdata); 
+					root_event_user_data = JSON.parse(payload.root_event_userdata); 
 				} catch (e) {
-					logger.error("JSON.parse() exception when parsing : ", payload.root_event_userdata);
+					logger.error("JSON.parse() exception when parsing : ", payload.root_event_userdata + "; " + e);
 					return;
 				}
 				if (!user_data.notification) {
@@ -49,7 +49,7 @@ function firstXmppParticipantJoined(payload) {
 				try {
 					user_data = JSON.parse(payload.root_event_eventdata); 
 				} catch (e) {
-					logger.error("JSON.parse() exception when parsing : ", payload.root_event_eventdata);
+					logger.error("JSON.parse() exception when parsing : ", payload.root_event_eventdata + "; " + e);
 					return;
 				}
 				if (!root_event_event_data.rtc_server) {
