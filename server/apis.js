@@ -23,7 +23,7 @@ exports.processEvent = function(req, res) {
 	if (typeof irisEventTriggers.getTrigger(req.body.app_domain, req.body.event_type) != 'undefined') {
 		process.nextTick(irisEventTriggers.fireTrigger, req.body);
 	} else {
-		logger.info("Traceid=" + req.body.trace_id + ", Trigger=FALSE, Message=app_domain=" + req.body.app_domain + " event_type=" + req.body.event_type + " event_triggered_by=" + req.body.event_triggered_by + " root_event_room_id=" + req.body.root_event_room_id + " root_event_eventdata=" + req.body.root_event_eventdata + " root_event_userdata=" + req.body.root_event_userdata + " child_event_userdata=" + req.body.child_event_userdata);
+		logger.info("Traceid=" + req.body.trace_id + ", Trigger=FALSE, Message=app_domain=" + req.body.app_domain + " event_type=" + req.body.event_type + " event_triggered_by=" + req.body.event_triggered_by + " root_event_room_id=" + req.body.root_event_room_id);
 	}
 	res.sendStatus(200);              
 };
