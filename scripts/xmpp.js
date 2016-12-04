@@ -39,7 +39,7 @@ function firstXmppParticipantJoined(payload) {
 					logger.error("JSON.parse() exception when parsing : ", payload.root_event_userdata + "; " + e);
 					return;
 				}
-				if (!user_data.notification) {
+				if (!root_event_user_data.notification) {
 					logger.error("Traceid=" + payload.trace_id + ", Message=No notification object available");
 					return
 				}
@@ -47,7 +47,7 @@ function firstXmppParticipantJoined(payload) {
 				// parse payload.root_event_eventdata to extract rtc_server info
 				var root_event_event_data ;
 				try {
-					user_data = JSON.parse(payload.root_event_eventdata); 
+					root_event_event_data = JSON.parse(payload.root_event_eventdata); 
 				} catch (e) {
 					logger.error("JSON.parse() exception when parsing : ", payload.root_event_eventdata + "; " + e);
 					return;
@@ -62,7 +62,7 @@ function firstXmppParticipantJoined(payload) {
 						// Do not publish to caller via NM
 						continue
 					}
-					var topic = encodeURIComponent(user_data.notification.topic + "/" + em_resp.to_routing_ids[i].routing_id);
+					var topic = encodeURIComponent(root_event_user_data.notification.topic + "/" + em_resp.to_routing_ids[i].routing_id);
 					logger.info(topic);
 					var nm_request_body = { 
 						payload : {
