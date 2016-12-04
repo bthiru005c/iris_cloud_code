@@ -9,13 +9,14 @@ var env = process.env.NODE_ENV || 'development'
 	, fetch = require('node-fetch');
 
 function firstXmppParticipantJoined(payload) {
-	
-	logger.info("Traceid=" + payload.trace_id + ", Trigger=true, Message=app_domain=" + payload.app_domain + " event_type=" + payload.event_type + " root_event_room_id=" + payload.root_event_room_id + " root_event_type=" + payload.root_event_type + " root_event_updated_at=" + payload.root_event_updated_at + " userdata=" + payload.userdata);
+	participantsinfo/roomid/:id/routingid/:rid
+	logger.info("Traceid=" + payload.trace_id + ", Trigger=true, Message=app_domain=" + payload.app_domain + " event_type=" + payload.event_type + " event_triggered_by=" + payload.event_triggered_by + " root_event_room_id=" + payload.root_event_room_id + " root_event_eventdata=" + payload.root_event_eventdata + " root_event_userdata=" + payload.root_event_userdata + " child_event_userdata=" + payload.child_event_userdata);
 	if (payload && payload.root_event_room_id && payload.root_event_type && payload.root_event_updated_at)  { 
 		var em_options = {
-			url: "https://" + config.event_manager + "/events/rooteventinfo/roomid/" + payload.root_event_room_id + "/eventtype/" + payload.root_event_type + "/time/" + payload.root_event_updated_at,
+			url: "https://" + config.event_manager + "/events/participantsinfo/roomid/" + payload.root_event_room_id + "/routingid/" + payload.event_triggered_by,
 			headers: {
-    		'Authorization': "Bearer " + config.jwt
+    		'Authorization': "Bearer " + config.jwt,
+    		'Trace-Id': payload.trace_id
 			}
 		};
  		request(em_options, function (error, response, em_resp_body) {
@@ -27,23 +28,33 @@ function firstXmppParticipantJoined(payload) {
 					logger.error("JSON.parse() exception when parsing : ", em_resp_body);
 					return;
 				}
-				if ( (!em_resp.room_id) 
-							|| (!em_resp.rtc_server) 
-							|| (!em_resp.to_routing_ids) 
-							|| (!em_resp.to_routing_ids instanceof Array)
-							|| (!em_resp.userdata) ) {
+				if ( (!em_resp.to_routing_ids) || (!em_resp.to_routing_ids instanceof Array) ) {
 					logger.error("Traceid=" + payload.trace_id + ", Message=Invalid Payload Received");
 					return
 				}
-				var user_data ;
+				// parse payload.root_event_userdata to extract notification JSON blob
+				var root_event_user_data ;
 				try {
-					user_data = JSON.parse(em_resp.userdata); 
+					user_data = JSON.parse(payload.root_event_userdata); 
 				} catch (e) {
-					logger.error("JSON.parse() exception when parsing : ", em_resp.userdata);
+					logger.error("JSON.parse() exception when parsing : ", payload.root_event_userdata);
 					return;
 				}
 				if (!user_data.notification) {
 					logger.error("Traceid=" + payload.trace_id + ", Message=No notification object available");
+					return
+				}
+
+				// parse payload.root_event_eventdata to extract rtc_server info
+				var root_event_event_data ;
+				try {
+					user_data = JSON.parse(payload.root_event_eventdata); 
+				} catch (e) {
+					logger.error("JSON.parse() exception when parsing : ", payload.root_event_eventdata);
+					return;
+				}
+				if (!root_event_event_data.rtc_server) {
+					logger.error("Traceid=" + payload.trace_id + ", Message=No RTC server object available");
 					return
 				}
 				
@@ -57,11 +68,11 @@ function firstXmppParticipantJoined(payload) {
 					var nm_request_body = { 
 						payload : {
 							routing_id: em_resp.to_routing_ids[i].routing_id,
-							room_id: em_resp.room_id,
-							rtc_server: em_resp.rtc_server,
+							room_id: payload.root_event_room_id,
+							rtc_server: root_event_event_data.rtc_server,
 							xmpp_token: em_resp.to_routing_ids[i].xmpp_token,
 							xmpp_token_expiry_time: em_resp.to_routing_ids[i].xmpp_token_expiry_time,
-							user_data: em_resp.userdata
+							user_data: payload.root_event_userdata
 						}
 					}
 //					var nm_options_path = "/v1/topic/" + topic;
