@@ -12,7 +12,7 @@ function firstXmppParticipantJoined(payload) {
 	logger.info("Traceid=" + payload.trace_id + ", Trigger=TRUE, Message=app_domain=" + payload.app_domain + " event_type=" + payload.event_type + " event_triggered_by=" + payload.event_triggered_by + " root_event_room_id=" + payload.root_event_room_id);
 	if (payload && payload.root_event_room_id && payload.event_triggered_by)  { 
 		var em_options = {
-			url: "https://" + config.event_manager + "/events/participantsinfo/roomid/" + payload.root_event_room_id + "/routingid/" + payload.event_triggered_by,
+			url: "http://" + config.event_manager + "/events/participantsinfo/roomid/" + payload.root_event_room_id + "/routingid/" + payload.event_triggered_by,
 			headers: {
     		'Authorization': "Bearer " + config.jwt,
     		'Trace-Id': payload.trace_id
@@ -117,7 +117,11 @@ function firstXmppParticipantJoined(payload) {
 				if (error) {
 					logger.error("Traceid=" + payload.trace_id + ", Message=" + error);
 				} else {
-					logger.error("Traceid=" + payload.trace_id + ", Message=Response from Event Manager=" + response.statusCode);
+					if ( (response.statusCode > 200) && (response.statusCode < 500) ) {
+						logger.error("Traceid=" + payload.trace_id + ", Message=Response from Event Manager=" + response.statusCode);
+					} else {
+						logger.error("Traceid=" + payload.trace_id + ", Message=status code =" + response.statusCode);
+					}
 				}
 			}
 		});
