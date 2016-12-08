@@ -107,10 +107,10 @@ function firstXmppParticipantJoined(payload) {
 						body: JSON.stringify(nm_request_body)
 					})
 					.then (function(res) {
-						logger.info("Traceid=" + payload.trace_id + ", Message=Response from Event Manager=" + res.status);
+						logger.info("Traceid=" + payload.trace_id + ", Message=Response from Notification Manager=" + res.status);
 					})
 					.catch(function(err) {
-						logger.info("Traceid=" + payload.trace_id + ", Message=Error in attempt to send request to Event Manager=" + err);
+						logger.info("Traceid=" + payload.trace_id + ", Message=Error in attempt to send request to Notification Manager=" + err);
 					});
 				}
 			} else {
