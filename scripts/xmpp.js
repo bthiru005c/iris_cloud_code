@@ -102,6 +102,7 @@ function firstXmppParticipantJoined(payload) {
 						method: 'POST',
 			      headers: {
 							'Content-Type': 'application/json; charset=utf-8',
+							'Trace-Id': payload.trace_id,
 							'Authorization': 'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsIng1dSI6Imh0dHBzOi8vc3QtaXJpc2F1dGgtd2NkY2MtMDAxLnBvYy5zeXMuY29tY2FzdC5uZXQvand0a2V5cy9iSmplWEVwaXFYTUJBSnB1RHIwa3NnN3BrVUNRbE5sVi5wdWIifQ.eyJhcHBfa2V5IjoiYkpqZVhFcGlxWE1CQUpwdURyMGtzZzdwa1VDUWxObFYiLCJkb21haW4iOiJJcmlzVmlkZW9DaGF0LmNvbWNhc3QuY29tIiwiZXhwIjoxNDY4Mjc0NjAxLCJpYXQiOjE0NjgyNjc0MDEsImlkIjoic2Vhc29uczIwMTQiLCJpc3MiOiJpcmlzYXV0aCIsIm5hbWUiOiJhbm9ueW1vdXMiLCJzdWIiOiJzZWFzb25zMjAxNCIsInR5cGUiOiJBbm9ueW1vdXMiLCJ1c2VyX2lkIjoic2Vhc29uczIwMTQifQ.cvFua3YAjvXr85poVBonTuV4O6e6MSvqRFK6jaGdgQ9VcczfKqfoTTJ-5s_xbBjGtBmdZCc2uN4nGiIE-Qj3sQ'
 						},
 						body: JSON.stringify(nm_request_body)
