@@ -12,4 +12,9 @@
     "appDomain": "cch-demo.comcast.com",
     "eventType": "firstxmppparticipantjoined",
     "scriptFile": "/usr/local/iris_cloud_code/scripts/xmpp.js"
+},
+{
+    "appDomain": "iristest.comcast.com",
+    "eventType": "firstxmppparticipantjoined",
+    "scriptFile": "/usr/local/iris_cloud_code/scripts/xmpp.js"
 }]

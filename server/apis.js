@@ -31,7 +31,7 @@ exports.processEvent = function(req, res) {
 // get software version
 exports.version = function(req, res) {
 	var ver = {
-		"version": "IRIS Cloud Code v1.0.8"
+		"version": "IRIS Cloud Code v1.0.10"
 	};
 	res.status(200).json(JSON.stringify(ver));
 };                          
