@@ -1,6 +1,6 @@
 services:
   # The image name is in the [NAME:TAG] format. This should match what was used to build the Dockerfile 
-  image: iriscc:1.0
+  image: iriscc:1.0.9
   # DO NOT tamper with this command
   working_dir: /usr/local/iris_cloud_code
   command: node bin/www

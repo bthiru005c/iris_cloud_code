@@ -63,7 +63,7 @@ function firstXmppParticipantJoined(payload) {
 						continue
 					}
 					var topic = encodeURIComponent(root_event_user_data.notification.topic + "/" + em_resp.to_routing_ids[i].routing_id);
-					logger.info(topic);
+					logger.info("Traceid=" + payload.trace_id + ", Message=" + topic);
 					var nm_request_body = { 
 						payload : {
 							trace_id: payload.trace_id,
