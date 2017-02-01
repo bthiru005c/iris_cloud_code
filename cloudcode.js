@@ -12,6 +12,30 @@ var env = process.env.NODE_ENV || 'development'
 
 var app = express();
 
+var iris_server_jwt;
+
+// read jwt file periodically
+(function get_iris_server_jwt() {
+	try {
+		data = fs.readFileSync(config.jwt_file, "utf8");
+		var lines = data.split(/\r\n|\r|\n/);
+		if (lines.length != 2) {
+			logger.error("Type=JwtFile, Message=jwt file " + config.jwt_file + " has " + lines.length + " lines - should contain only one line ; Iris CloudCode Exiting...." );
+			process.exit(1);	
+		} 
+		// else do nothing
+		// copy the JWT
+		iris_server_jwt = lines[0];
+		// Call the same function again every 30 seconds
+		setTimeout(function () {
+			get_iris_server_jwt();
+		}, 30*1000);
+	} catch (err) {
+	  	logger.error("Type=ntmJwtFileReadFailure, Message=" + err + " ; Unable to read jwt file " +  config.jwt_file + " ; Iris CloudCode Exiting...." );
+	  	process.exit(1);	
+	}
+})();
+
 app.set('ssl_enabled', config.ssl_enabled);
 if (config.ssl_enabled) {
 	app.set('ssl_private_key', config.ssl_private_key);
@@ -69,6 +93,11 @@ app.use((req, res, next) => {
 });
 
 // error handlers
+app.all('/.git/', function (req,res, next) {
+   res.status(403).send({
+      message: 'Access Forbidden'
+   });
+});
 
 // development error handler
 // will print stacktrace
@@ -89,13 +118,13 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 /* 
- *  export the current value of best_xmpp_server
  *  The following SO link
  *  http://stackoverflow.com/questions/7381802/node-modules-exporting-a-variable-versus-exporting-functions-that-reference-it
  *  explains why passing by reference (not value) is correct
- *  The line "export.best_xmpp_server  best_xmpp_server" will ensure that
- *  best_xmpp_server will always remain same, in the module that uses it
  */
 Object.defineProperty(exports, "scripts_modules", {
   get: function() { return scripts_modules; }
+});
+Object.defineProperty(exports, "iris_server_jwt", {
+  get: function() { return iris_server_jwt; }
 });

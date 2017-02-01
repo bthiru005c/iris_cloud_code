@@ -15,9 +15,9 @@ module.exports = {
 		ssl_enabled : true,	                                                        <--- if true, the port is ALWAYS 443
 		ssl_private_key: '/opt/certs/rtc.key',                                      <--- absolute/relative PATH + key file - relative PATH starts from the base directory
 		ssl_certificate: '/opt/certs/rtc.crt',                                      <--- absolute/relative PATH + cert file - relative PATH starts from the base directory		
-		event_manager: '<FQDN>',                                                    <--- FQDN OF EVENT MANAGER - DO NOT START WITH SCHEME (HTTP:// or HTTPS://)
-		notification_manager: '<FQDN>',                                             <--- FQDN OF NOTIFICATION MANAGER - DO NOT START WITH SCHEME (HTTP:// or HTTPS://)
-		jwt: ''                                                                     <--- MUST BE JWT WITH SCOPE "iris server"
+		event_manager: 'https://<CNAME/FQDN>',                                      <--- CNAME/FQDN OF EVENT MANAGER - MUST START WITH SCHEME (HTTP:// or HTTPS://)
+		notification_manager: 'https://<CNAME/FQDN>',                               <--- CNAME/FQDN OF NOTIFICATION MANAGER - MUST START WITH SCHEME (HTTP:// or HTTPS://)
+		jwt_file: '/usr/local/iris_cloud_code/configuration/server_jwt.txt'         <--- FILE MUST CONTAIN A JWT WITH SCOPE "iris server". ALTHOUGH NOT MANDATORY, DO NOT CHANGE THE PATH AND FILE NAME
 		// Logging configuration
 		log: {                                                                      <--- DO NOT TOUCH. LEAVE THIS ENTIRE OBJECT AS IS
 			console: {
