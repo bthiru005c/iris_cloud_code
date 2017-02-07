@@ -1,6 +1,6 @@
 {
   "name": "cloudcode",
-  "version": "1.0.10",
+  "version": "1.0.13",
   "description": "Cloud Code server",
   "main": "cloudcode.js",
   "scripts": {
@@ -17,6 +17,7 @@
 		"cors": "2.8.1",
 		"forever": "0.15.2",
     "body-parser": "1.15.2",
+    "jsonwebtoken": "7.1.9",
     "express": "4.14.0",
     "request": "2.79.0",
     "underscore": "1.8.3",
