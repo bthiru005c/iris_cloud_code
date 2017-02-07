@@ -8,6 +8,7 @@ var env = process.env.NODE_ENV || 'development'
 	, cors = require('cors')
 	, irisEventTriggers = require('./server/iriseventtriggers')
 	, api = require('./server/apis')
+	, validateJwt = require('./server/validate-jwt')
 	, scripts_modules = {};
 
 var app = express();
@@ -71,11 +72,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
+app.get('/v1/version', api.version);
+
+// ALL APIs below must be validated 
+app.use(validateJwt.verify);
 // APIs
 app.post('/v1/event', api.processEvent);
 
-// GET 
-app.get('/v1/version', api.version);
+// GET
 
 var handleShutdown = function() {
 	logger.info('IRIS Cloud Code server shutting down...');
@@ -117,6 +121,7 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
+exports.config = config;
 /* 
  *  The following SO link
  *  http://stackoverflow.com/questions/7381802/node-modules-exporting-a-variable-versus-exporting-functions-that-reference-it
