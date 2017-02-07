@@ -9,6 +9,7 @@ module.exports = {
 		event_manager: 'https://<CNAME/FQDN>',
 		notification_manager: 'https://<CNAME/FQDN>',
 		jwt_file: '/usr/local/iris_cloud_code/configuration/server_jwt.txt',
+		aum: "https://<CNAME/FQDN>/jwtkeys",
 		// Logging configuration
 		log: {
 			console: {

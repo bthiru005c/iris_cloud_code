@@ -18,6 +18,7 @@ module.exports = {
 		event_manager: 'https://<CNAME/FQDN>',                                      <--- CNAME/FQDN OF EVENT MANAGER - MUST START WITH SCHEME (HTTP:// or HTTPS://)
 		notification_manager: 'https://<CNAME/FQDN>',                               <--- CNAME/FQDN OF NOTIFICATION MANAGER - MUST START WITH SCHEME (HTTP:// or HTTPS://)
 		jwt_file: '/usr/local/iris_cloud_code/configuration/server_jwt.txt'         <--- FILE MUST CONTAIN A JWT WITH SCOPE "iris server". ALTHOUGH NOT MANDATORY, DO NOT CHANGE THE PATH AND FILE NAME
+		aum: "https://<CNAME/FQDN>/jwtkeys",                                        <-- CNAME/FQDN OF AUTH MANAGER - MUST START WITH SCHEME (HTTP:// or HTTPS://)
 		// Logging configuration
 		log: {                                                                      <--- DO NOT TOUCH. LEAVE THIS ENTIRE OBJECT AS IS
 			console: {
