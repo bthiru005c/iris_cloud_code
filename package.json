@@ -9,7 +9,7 @@
   "author": "Harsha Bellur & Robert Sliwa",
   "license": "SEE LICENSE IN LICENSE.txt",
 	"scripts": {
-		"start": "forever start --minUptime 1000 --spinSleepTime 1000 ./bin/www",
+		"start": "NODE_ENV=production forever start --minUptime 1000 --spinSleepTime 1000 ./bin/www",
 		"stop": "forever stop ./bin/www"
 	},
   "dependencies": {

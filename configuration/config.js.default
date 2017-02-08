@@ -1,7 +1,9 @@
 // Run-time updates to this file will not be reflected in the program as explained in 
 // http://stackoverflow.com/questions/16710181/change-configuration-in-runtime-by-changing-environment-variables-using-the-modu
 module.exports = {
-	development: {
+	development: {},
+	test: {},
+	production: {
 		port : '443',	// MUST specify port if ssl_enabled is false. If true, this value is ignored
 		ssl_enabled : true,	// if true, the port is ALWAYS 443
 		ssl_private_key: '/opt/certs/rtc.key',		// absolute/relative PATH + key file - relative PATH starts from the base directory
@@ -25,7 +27,5 @@ module.exports = {
 				maxsize: 10485760    // 10mb before rotating to another file
 			}
 		},
-	},
-	test: {},
-	production: {}
+	}	
 };

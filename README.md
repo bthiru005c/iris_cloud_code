@@ -5,11 +5,12 @@
 The following is the template for configuration file (in JSON format) that is read by the application, at startup. The file
 name *MUST* be *config.js* and *MUST* reside in the directory named *configuration*.
 
-If 
 
 ```sh
 module.exports = {
-	development: {
+	development: {},
+	test: {},
+	production: {
 		port : '443',                                	                              <--- MUST specify port if ssl_enabled is false. If true, this value is ignored
 		fqdn : '',                                                                  <--- FQDN/IP OF THE HOST WHERE THIS APPLICATION IS GOING TO RUN 
 		ssl_enabled : true,	                                                        <--- if true, the port is ALWAYS 443
@@ -33,10 +34,8 @@ module.exports = {
 				dirname: './log',
 				maxsize: 10485760    // 10mb before rotating to another file
 			}
-		},
-	},
-	test: {},
-	production: {}
+		}
+	}	
 };
 ```
 

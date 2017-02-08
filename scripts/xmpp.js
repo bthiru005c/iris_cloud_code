@@ -1,7 +1,6 @@
 "use strict";
 
-var env = process.env.NODE_ENV || 'development'
-	, config = require('../configuration/config')[env]
+var config = require('../cloudcode')
 	, logger = require('../lib/logwinston.js')
 	, irisEventTriggers = require('../server/iriseventtriggers')
 	, request = require('request')
