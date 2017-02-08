@@ -23,8 +23,13 @@ exports.verify = function(req, res, next) {
 	 					logger.error('Authentication failed :' +  err.message);
 	 					res.status(401).send({ message: 'Authentication failed: ' + err.message });
 	 				} else {
-	 					req.decoded = signed_payload;
-	 					next()
+		 					// Check JWT claims scope here
+	 					if (decoded.payload.scopes.indexOf("iris server") > -1) {
+	 						next()
+	 					} else {
+	 						logger.error("Unauthorized " + req.method + " API access");
+	 						res.status(401).send({status: "Unauthorized API access"});
+	 					}
 	 				}
 	 			});
 	 		} else {
