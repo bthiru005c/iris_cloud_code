@@ -72,6 +72,8 @@ function firstXmppParticipantJoined(payload) {
 							rtc_server: root_event_event_data.rtc_server,
 							xmpp_token: em_resp.to_routing_ids[i].xmpp_token,
 							xmpp_token_expiry_time: em_resp.to_routing_ids[i].xmpp_token_expiry_time,
+							room_token: em_resp.to_routing_ids[i].room_token,
+							room_token_expiry_time: em_resp.to_routing_ids[i].room_token_expiry_time,
 							user_data: payload.root_event_userdata
 						}
 					}
