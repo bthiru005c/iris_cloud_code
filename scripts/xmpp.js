@@ -24,7 +24,7 @@ function firstXmppParticipantJoined(payload) {
 				try {
 					em_resp = JSON.parse(em_resp_body); 
 				} catch (e) {
-					logger.error("JSON.parse() exception when parsing : ", em_resp_body);
+					logger.error("JSON.parse() exception when parsing responce body: ", em_resp_body);
 					return;
 				}
 				if ( (!em_resp.to_routing_ids) || (!em_resp.to_routing_ids instanceof Array) ) {
@@ -36,7 +36,7 @@ function firstXmppParticipantJoined(payload) {
 				try {
 					root_event_user_data = JSON.parse(payload.root_event_userdata); 
 				} catch (e) {
-					logger.error("JSON.parse() exception when parsing : ", payload.root_event_userdata + "; " + e);
+					logger.error("JSON.parse() exception when parsing userdata : ", payload.root_event_userdata + "; " + e);
 					return;
 				}
 				if (!root_event_user_data.notification) {
@@ -49,7 +49,7 @@ function firstXmppParticipantJoined(payload) {
 				try {
 					root_event_event_data = JSON.parse(payload.root_event_eventdata); 
 				} catch (e) {
-					logger.error("JSON.parse() exception when parsing : ", payload.root_event_eventdata + "; " + e);
+					logger.error("JSON.parse() exception when parsing eventdata: ", payload.root_event_eventdata + "; " + e);
 					return;
 				}
 				if (!root_event_event_data.rtc_server) {
