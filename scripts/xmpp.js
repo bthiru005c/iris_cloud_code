@@ -24,7 +24,7 @@ function firstXmppParticipantJoined(payload) {
 				try {
 					em_resp = JSON.parse(em_resp_body); 
 				} catch (e) {
-					logger.error("JSON.parse() exception when parsing responce body: ", em_resp_body);
+					logger.error("JSON.parse() exception when parsing response body: ", em_resp_body);
 					return;
 				}
 				if ( (!em_resp.to_routing_ids) || (!em_resp.to_routing_ids instanceof Array) ) {
