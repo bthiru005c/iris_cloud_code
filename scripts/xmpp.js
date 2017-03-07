@@ -12,7 +12,7 @@ function firstXmppParticipantJoined(payload) {
 	logger.info("Traceid=" + payload.trace_id + ", Trigger=TRUE, Message=app_domain=" + payload.app_domain + " event_type=" + payload.event_type + " event_triggered_by=" + payload.event_triggered_by + " root_event_room_id=" + payload.root_event_room_id);
 	if (payload && payload.root_event_room_id && payload.event_triggered_by)  { 
 		var em_options = {
-			url: config.config.event_manager + "/v1/notification/participants/roomid/" + payload.root_event_room_id + "/routingid/" + payload.event_triggered_by,
+			url: config.config.event_manager + "/v1/notification/participants/room/" + payload.root_event_room_id + "/routingid/" + payload.event_triggered_by,
 			headers: {
     		'Authorization': "Bearer " + cc.iris_server_jwt,
     		'Trace-Id': payload.trace_id
