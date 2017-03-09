@@ -40,7 +40,7 @@ function firstXmppParticipantJoined(payload) {
 					return;
 				}
 				if (!root_event_user_data.notification) {
-					logger.error("Traceid=" + payload.trace_id + ", Message=No notification object available");
+					logger.info("Traceid=" + payload.trace_id + ", Message=No notification object available");
 					return
 				}
 
