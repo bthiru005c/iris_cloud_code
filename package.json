@@ -1,6 +1,6 @@
 {
   "name": "cloudcode",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "Cloud Code server",
   "main": "cloudcode.js",
   "scripts": {
