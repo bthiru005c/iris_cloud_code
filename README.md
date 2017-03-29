@@ -57,8 +57,8 @@ module.exports = {
 	app_domain        string     (MANDATORY) Application domain (Ex: xfinityvoice.comcast.com,....)
 	event_type        string     (MANDATORY) This event in combination with the app_domain acts as a trigger
 	                                         to execute a custom JS script
-	data              string     (OPTIONAL) Possibly a stringified JSON - serves as input to the 
-	                                        script to be executed
+	data              string     (OPTIONAL)  Possibly a stringified JSON - serves as input to the 
+	                                         script to be executed
 ```
 
 #### Response
