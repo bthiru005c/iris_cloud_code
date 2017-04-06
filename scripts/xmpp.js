@@ -89,7 +89,8 @@ function firstXmppParticipantJoined(traceID, payload) {
 						method: 'POST',
 			      headers: {
 							'Content-Type': 'application/json; charset=utf-8',
-							'Authorization': "Bearer " + cc.iris_server_jwt
+							'Authorization': "Bearer " + cc.iris_server_jwt,
+							'Trace-Id': traceID
 						},
 						body: JSON.stringify(nm_request_body)
 					})
