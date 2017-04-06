@@ -46,7 +46,7 @@ exports.verify = function(req, res, next) {
 	var traceID = req.headers['trace-id'];
 	if (!traceID || traceID === '') {
 		traceID = "CLC-" + uuidV1();
-		res.set({'Trace-Id': traceID});
+		res.set({'trace-id': traceID});
 	}	
 	const token = getBearerToken(req.headers['authorization']);
 	if (token) {
