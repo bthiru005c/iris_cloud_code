@@ -3,65 +3,109 @@
 var config = require('../cloudcode')
  , jwt = require('jsonwebtoken')
  , logger = require('../lib/logwinston')
- , request = require('request');
+ , request = require('request')
+ , Promise = require("bluebird")
+ , jwts = {};
+
+
+function getAppKey(token) {	
+	return new Promise(function(resolve, reject){ //Or Q.defer() in Q
+		const decoded = jwt.decode(token, {complete: true});
+		if (decoded === null) {
+			logger.error('unable to decode token :' +  token);
+			reject('unable to decode token');
+		}
+		const appKey = decoded.payload.app_key;
+		// if JWT is cached then it saves the round trip time to fetch it from AUM
+		if (jwts[appKey]) {
+			resolve(decoded);
+		} else {
+			// we are here because the JWT for appKey is not cached		                             
+			request(config.config.aum + '/' + appKey + '.pub', function(error, response, body) {   
+				if (!error && response.statusCode == 200) {
+		 			// body contains the public key; This should be a synchronous operation
+		 			// cache JWT for future verification
+		 			jwts[appKey] = body;
+		 			logger.info(body)
+		 			resolve(decoded);
+		 		} else {
+		 			if (error) {
+		 				logger.error('Could not retrieve public key from AUM :' +  error);
+		 			} else {
+		 				logger.error('Could not verify token because auth manager returned :' +  response.statusCode);
+		 			}
+		 			reject('Could not retrieve public key from AUM');
+		 		}
+			});			
+		}
+	});
+}	
 
 exports.verify = function(req, res, next) {
 	const token = getBearerToken(req.headers['authorization']);
 	if (token) {
-		const decoded = jwt.decode(token, {complete: true});
-		if (decoded === null) {
-			logger.error('error saving subscription info :' +  err);
-			return res.status(401).send({status: "error saving subscription info", reason: err});
-		}
-		const appKey = decoded.payload.app_key;
-		                             
-		request(config.config.aum + '/' + appKey + '.pub', function(error, response, body) {   
-			if (!error && response.statusCode == 200) {
-	 			// body contains the public key; This should be a synchronous operation
-	 			jwt.verify(token, body, function(err, signed_payload) {
-	 				if (err) {
-	 					logger.error('Authentication failed :' +  err.message);
-	 					res.status(401).send({ message: 'Authentication failed: ' + err.message });
-	 				} else {
-		 					// Check JWT claims scope here
-	 					if (decoded.payload.scopes.indexOf("iris server") > -1) {
-	 						next()
-	 					} else {
-	 						logger.error("Unauthorized " + req.method + " API access");
-	 						res.status(401).send({status: "Unauthorized API access"});
-	 					}
-	 				}
-	 			});
-	 		} else {
-	 			if (error) {
-	 				logger.error('Could not verify token because auth manager :' +  error);
-	 				res.status(401).send({status: "Could not verify token :  ", reason: error});
-	 			} else {
-	 				logger.error('Could not verify token because auth manager returned :' +  response.statusCode);
-	 				res.status(401).send({status: "Could not verify token because auth manager returned ; ", reason: response.statusCode});
-	 			}
-	 		}
-		});
+		getAppKey(token)
+		.then(function(decoded) {
+	 		jwt.verify(token, jwts[decoded.payload.app_key], function(err, signed_payload) {
+		 		if (err) {
+		 			logger.error('Authentication failed :' +  err.message);
+		 			// delete cache
+		 			if (jwts[decoded.payload.app_key]) {
+		 				delete jwts[decoded.payload.app_key];
+		 			} 
+		 			res.status(401).send({ message: 'Authentication failed: ' + err.message });
+		 		} else {
+					// request payload validation
+					if ( (!req.body.app_domain) || (!req.body.event_type) ) {
+		 				logger.error("app_domain and/or event_type missing in request payload");
+		 				return res.status(404).send({status: "app_domain and/or event_type missing in request payload"});
+					}	 			
+					// Check JWT claims type is core or server
+					switch (decoded.payload.type) { 
+					case "Server":
+						// app domain validation
+						if (decoded.payload.domain != req.body.app_domain) {
+		 					logger.error("JWT claims domain " + decoded.payload.domain + " does not match app domain " + req.body.app_domain + " in request payload");
+		 					res.status(403).send({status: "JWT claims domain does not match app domain in request payload"});							
+						}
+						// do not break - fallthrough
+					case "Core":
+						// Authorized if core or server JWT
+						return next()
+		 			default:
+		 				logger.error("JWT claims type " + decoded.payload.type + "; Unauthorized " + req.method + " API access");
+			 			// delete cache
+			 			if (jwts[decoded.payload.app_key]) {
+			 				delete jwts[decoded.payload.app_key];
+			 			}
+		 				res.status(401).send({status: "JWT claims type - Unauthorized API access"});
+		 			}
+		 		}
+		 	});
+		})
+		.catch(err => {
+			res.status(401).send({status: "API access unauthorized ", reason: err});
+		}) 
 	} else {
-		res.status(401).send({status: "No Token or Invalid format in authorization header"});
-	}
-	 					
+		// invalid token
+		res.status(401).send({status: "API access unauthorized ", reason: "Invalid token format"});
+	}						
 };
  
 function getBearerToken(authorizationHeader) {
-  if (!authorizationHeader) {
-    return null;
-  }
-
-  const authComponents = authorizationHeader.split(' ');
-
-  if (authComponents.length !== 2) {
-    return null;
-  }
-
-  if (authComponents[0] !== 'Bearer') {
-    return null;
-  }
-
-  return authComponents[1];
+	if (!authorizationHeader) {
+		return null;
+	}
+	
+	const authComponents = authorizationHeader.split(' ');
+	
+	if (authComponents.length !== 2) {
+		return null;
+	}
+	
+	if (authComponents[0] !== 'Bearer') {
+		return null;
+	}
+	
+	return authComponents[1];
 }

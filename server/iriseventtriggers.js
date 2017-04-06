@@ -17,12 +17,12 @@ function getTrigger(appDomain, eventType) {
 	return undefined;
 }
 
-function fireTrigger(payLoad) {
+function fireTrigger(traceID, payLoad) {
 	var key = payLoad.app_domain + payLoad.event_type;
 	if (triggerStore && triggerStore[key]) {
 		var script = triggerStore[key];
 		logger.debug("script is " + script);
-		em.scripts_modules[script](payLoad);
+		em.scripts_modules[script](traceID, payLoad);
 	} else {
 		logger.info(payLoad);
 	}

@@ -8,21 +8,21 @@ var config = require('../cloudcode')
 	, fetch = require('node-fetch')
 	, cc = require('../cloudcode');
 
-function firstXmppParticipantJoined(payload) {
+function firstXmppParticipantJoined(traceID, payload) {
 	try {
 		data = JSON.parse(payload.data); 
 	} catch (e) {
-		logger.error("JSON.parse() exception when parsing payload.data : ", payload.data + "; " + e);
+		logger.error("TraceID=" + traceID + ", Message=JSON.parse() exception when parsing payload.data : ", payload.data + "; " + e);
 		return;
 	}
 	
-	logger.info("Traceid=" + data.trace_id + ", Trigger=TRUE, Message=app_domain=" + payload.app_domain + " event_type=" + payload.event_type + " event_triggered_by=" + data.event_triggered_by + " root_event_room_id=" + data.root_event_room_id);
+	logger.info("TraceID=" + traceID + ", Trigger=TRUE, Message=app_domain=" + payload.app_domain + " event_type=" + payload.event_type + " event_triggered_by=" + data.event_triggered_by + " root_event_room_id=" + data.root_event_room_id);
 	if (payload && data && data.root_event_room_id && data.event_triggered_by)  { 
 		var em_options = {
 			url: config.config.event_manager + "/v1/notification/participants/room/" + data.root_event_room_id + "/routingid/" + data.event_triggered_by,
 			headers: {
     		'Authorization': "Bearer " + cc.iris_server_jwt,
-    		'Trace-Id': data.trace_id
+    		'Trace-Id': traceID
 			}
 		};
  		request(em_options, function (error, response, em_resp_body) {
@@ -31,11 +31,11 @@ function firstXmppParticipantJoined(payload) {
 				try {
 					em_resp = JSON.parse(em_resp_body); 
 				} catch (e) {
-					logger.error("JSON.parse() exception when parsing response body: ", em_resp_body);
+					logger.error("TraceID=" + traceID + ", Message=JSON.parse() exception when parsing response body: ", em_resp_body);
 					return;
 				}
 				if ( (!em_resp.to_routing_ids) || (!em_resp.to_routing_ids instanceof Array) ) {
-					logger.error("Traceid=" + data.trace_id + ", Message=Invalid Payload Received");
+					logger.error("TraceID=" + traceID + ", Message=Invalid Payload Received");
 					return
 				}
 				// parse payload.root_event_userdata to extract notification JSON blob
@@ -43,11 +43,11 @@ function firstXmppParticipantJoined(payload) {
 				try {
 					root_event_user_data = JSON.parse(data.root_event_userdata); 
 				} catch (e) {
-					logger.error("JSON.parse() exception when parsing userdata : ", data.root_event_userdata + "; " + e);
+					logger.error("TraceID=" + traceID + ", Message=JSON.parse() exception when parsing userdata : ", data.root_event_userdata + "; " + e);
 					return;
 				}
 				if (!root_event_user_data.notification) {
-					logger.info("Traceid=" + data.trace_id + ", Message=No notification object available");
+					logger.info("TraceID=" + traceID + ", Message=No notification object available");
 					return
 				}
 
@@ -56,11 +56,11 @@ function firstXmppParticipantJoined(payload) {
 				try {
 					root_event_event_data = JSON.parse(data.root_event_eventdata); 
 				} catch (e) {
-					logger.error("JSON.parse() exception when parsing eventdata: ", data.root_event_eventdata + "; " + e);
+					logger.error("TraceID=" + traceID + ", Message=JSON.parse() exception when parsing eventdata: ", data.root_event_eventdata + "; " + e);
 					return;
 				}
 				if (!root_event_event_data.rtc_server) {
-					logger.error("Traceid=" + data.trace_id + ", Message=No RTC server object available");
+					logger.error("TraceID=" + traceID + ", Message=No RTC server object available");
 					return
 				}
 				
@@ -70,10 +70,10 @@ function firstXmppParticipantJoined(payload) {
 						continue
 					}
 					var topic = encodeURIComponent(root_event_user_data.notification.topic + "/" + em_resp.to_routing_ids[i].routing_id);
-					logger.info("Traceid=" + data.trace_id + ", Message=" + topic);
+					logger.info("TraceID=" + traceID + ", Message=" + topic);
 					var nm_request_body = { 
 						payload : {
-							trace_id: data.trace_id,
+							trace_id: traceID,
 							routing_id: em_resp.to_routing_ids[i].routing_id,
 							room_id: data.root_event_room_id,
 							rtc_server: root_event_event_data.rtc_server,
@@ -94,20 +94,20 @@ function firstXmppParticipantJoined(payload) {
 						body: JSON.stringify(nm_request_body)
 					})
 					.then (function(res) {
-						logger.info("Traceid=" + data.trace_id + ", Message=Response from Notification Manager=" + res.status);
+						logger.info("TraceID=" + traceID + ", Message=Response from Notification Manager=" + res.status);
 					})
 					.catch(function(err) {
-						logger.info("Traceid=" + data.trace_id + ", Message=Error in attempt to send request to Notification Manager=" + err);
+						logger.info("TraceID=" + traceID + ", Message=Error in attempt to send request to Notification Manager=" + err);
 					});
 				}
 			} else {
 				if (error) {
-					logger.error("Traceid=" + data.trace_id + ", Message=" + error);
+					logger.error("TraceID=" + traceID + ", Message=" + error);
 				} else {
 					if ( (response.statusCode > 200) && (response.statusCode < 500) ) {
-						logger.error("Traceid=" + data.trace_id + ", Message=Response from Event Manager=" + response.statusCode);
+						logger.error("TraceID=" + traceID + ", Message=Response from Event Manager=" + response.statusCode);
 					} else {
-						logger.error("Traceid=" + data.trace_id + ", Message=status code =" + response.statusCode);
+						logger.error("TraceID=" + traceID + ", Message=status code =" + response.statusCode);
 					}
 				}
 			}
