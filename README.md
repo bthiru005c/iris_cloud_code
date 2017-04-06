@@ -41,7 +41,7 @@ module.exports = {
 
 ## APIS
 
-### PUT /v1/event
+### POST /v1/event
 
 #### Description
 ```sh

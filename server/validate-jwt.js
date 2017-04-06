@@ -8,11 +8,11 @@ var config = require('../cloudcode')
  , jwts = {};
 
 
-function getAppKey(token) {	
+function getAppKey(traceID, token) {	
 	return new Promise(function(resolve, reject){ //Or Q.defer() in Q
 		const decoded = jwt.decode(token, {complete: true});
 		if (decoded === null) {
-			logger.error('unable to decode token :' +  token);
+			logger.error("TraceID=" + traceID + ", Message=unable to decode token : " +  token);
 			reject('unable to decode token');
 		}
 		const appKey = decoded.payload.app_key;
@@ -26,13 +26,13 @@ function getAppKey(token) {
 		 			// body contains the public key; This should be a synchronous operation
 		 			// cache JWT for future verification
 		 			jwts[appKey] = body;
-		 			logger.info(body)
+		 			logger.debug("TraceID=" + traceID + ", Message=" + body)
 		 			resolve(decoded);
 		 		} else {
 		 			if (error) {
-		 				logger.error('Could not retrieve public key from AUM :' +  error);
+		 				logger.error("TraceID=" + traceID + ", Message=Could not retrieve public key from AUM : " +  error);
 		 			} else {
-		 				logger.error('Could not verify token because auth manager returned :' +  response.statusCode);
+		 				logger.error("TraceID=" + traceID + ", Message=Could not verify token because auth manager returned : " +  response.statusCode);
 		 			}
 		 			reject('Could not retrieve public key from AUM');
 		 		}
@@ -42,13 +42,17 @@ function getAppKey(token) {
 }	
 
 exports.verify = function(req, res, next) {
+	var traceID = "-1";
+	if (req.headers['trace-id']) {
+		traceID = req.headers['trace-id'];
+	}	
 	const token = getBearerToken(req.headers['authorization']);
 	if (token) {
-		getAppKey(token)
+		getAppKey(traceID, token)
 		.then(function(decoded) {
 	 		jwt.verify(token, jwts[decoded.payload.app_key], function(err, signed_payload) {
 		 		if (err) {
-		 			logger.error('Authentication failed :' +  err.message);
+		 			logger.error("TraceID=" + traceID + ", Message=Authentication failed : " +  err.message);
 		 			// delete cache
 		 			if (jwts[decoded.payload.app_key]) {
 		 				delete jwts[decoded.payload.app_key];
@@ -57,7 +61,7 @@ exports.verify = function(req, res, next) {
 		 		} else {
 					// request payload validation
 					if ( (!req.body.app_domain) || (!req.body.event_type) ) {
-		 				logger.error("app_domain and/or event_type missing in request payload");
+		 				logger.error("TraceID=" + traceID + ", Message=app_domain and/or event_type missing in request payload");
 		 				return res.status(404).send({status: "app_domain and/or event_type missing in request payload"});
 					}	 			
 					// Check JWT claims type is core or server
@@ -65,7 +69,7 @@ exports.verify = function(req, res, next) {
 					case "Server":
 						// app domain validation
 						if (decoded.payload.domain != req.body.app_domain) {
-		 					logger.error("JWT claims domain " + decoded.payload.domain + " does not match app domain " + req.body.app_domain + " in request payload");
+		 					logger.error("TraceID=" + traceID + ", Message=JWT claims domain " + decoded.payload.domain + " does not match app domain " + req.body.app_domain + " in request payload");
 		 					res.status(403).send({status: "JWT claims domain does not match app domain in request payload"});							
 						}
 						// do not break - fallthrough
@@ -73,7 +77,7 @@ exports.verify = function(req, res, next) {
 						// Authorized if core or server JWT
 						return next()
 		 			default:
-		 				logger.error("JWT claims type " + decoded.payload.type + "; Unauthorized " + req.method + " API access");
+		 				logger.error("TraceID=" + traceID + ", Message=JWT claims type " + decoded.payload.type + "; Unauthorized " + req.method + " API access");
 			 			// delete cache
 			 			if (jwts[decoded.payload.app_key]) {
 			 				delete jwts[decoded.payload.app_key];
