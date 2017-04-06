@@ -7,10 +7,8 @@ var irisEventTriggers = require('./iriseventtriggers')
  * @return - 200 OK with account id and auth token                                 
  *         - relevant response code for errors                                     
  */                                                                                
-exports.processEvent = function(req, res) {
-	// middleware is setting the trace ID in the response header                                      
+exports.processEvent = function(req, res) {                                     
 	const traceID = req.headers['trace-id'];
-	
 	// process.nextTick() defers the function to  a completely new stack
 	// Also allows the process to process other I/O bound requests
 	if (typeof irisEventTriggers.getTrigger(req.body.app_domain, req.body.event_type) != 'undefined') {
