@@ -46,8 +46,10 @@ exports.verify = function(req, res, next) {
 	var traceID = req.headers['trace-id'];
 	if (!traceID || traceID === '') {
 		traceID = "CLC-" + uuidV1();
-		res.set({'trace-id': traceID});
-	}	
+	}
+	// set the trace ID in response header. This will be read when processing the APIs as well
+	res.set({'trace-id': traceID});	
+	
 	const token = getBearerToken(req.headers['authorization']);
 	if (token) {
 		getAppKey(traceID, token)
