@@ -9,10 +9,7 @@ var irisEventTriggers = require('./iriseventtriggers')
  *         - relevant response code for errors                                     
  */                                                                                
 exports.processEvent = function(req, res) {                                      
-	var traceID = "CLC-" + uuidV1();
-	if (req.headers['trace-id']) {
-		traceID = req.headers['trace-id'];
-	}
+	var traceID = req.headers['trace-id'];
 	
 	// process.nextTick() defers the function to  a completely new stack
 	// Also allows the process to process other I/O bound requests

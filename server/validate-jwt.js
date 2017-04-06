@@ -42,9 +42,10 @@ function getAppKey(traceID, token) {
 }	
 
 exports.verify = function(req, res, next) {
-	var traceID = "-1";
-	if (req.headers['trace-id']) {
-		traceID = req.headers['trace-id'];
+	var traceID = req.headers['trace-id'];
+	if (!traceID || traceID === '') {
+		traceID = "CLC-" + uuidV1();
+		res.set({'Trace-Id': traceID});
 	}	
 	const token = getBearerToken(req.headers['authorization']);
 	if (token) {
