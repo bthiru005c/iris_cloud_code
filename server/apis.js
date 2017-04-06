@@ -1,7 +1,6 @@
 "use strict";
 var irisEventTriggers = require('./iriseventtriggers')
-	, logger = require('../lib/logwinston.js')
-	, uuidV1 = require('uuid/v1');	
+	, logger = require('../lib/logwinston.js');
                                                                       
 /*                                                                                 
  * POST /event

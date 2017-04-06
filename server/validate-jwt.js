@@ -5,6 +5,7 @@ var config = require('../cloudcode')
  , logger = require('../lib/logwinston')
  , request = require('request')
  , Promise = require("bluebird")
+ , uuidV1 = require('uuid/v1')
  , jwts = {};
 
 
