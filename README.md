@@ -49,10 +49,10 @@ with a scrpt that gets executed.
 On startup, cloudcode reads the triggers file, present in the configuration directory (same path as *config.json* file).
 The content of **triggers.json** file should be an array of JSON objects - each JSON object has the following keys
 
- - appDomain  
- - eventType
- - scriptFile - This is a javascript file that gets executed when cloudcode receives the HTTP request with the same
-                app domain ad event type it is associated with.
+ - **appDomain**  
+ - **eventType**
+ - **scriptFile** - This is a javascript file that gets executed when cloudcode receives the HTTP request with the same
+                    app domain ad event type it is associated with.
  
 
 Here's an example of the contents of *triggers.json* file
