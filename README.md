@@ -5,6 +5,7 @@
 The following is the template for configuration file (in JSON format) that is read by the application, at startup. The file
 name *MUST* be *config.js* and *MUST* reside in the directory named *configuration*.
 
+*NOTE: TRIGGERS ARE NO LONGER A PART OF SOFTWARE RELEASES. IT IS IMPORTANT TO ADD THE TRIGGERS IN A FILE, IN JSON FORMAT, IN THE CONFIGURATION DIRECTORY*
 
 ```sh
 module.exports = {
