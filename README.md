@@ -42,7 +42,7 @@ module.exports = {
 
 When cloudcode receives a [HTTP request](#post-v1event), cloudcode looks up the *triggers* list to determine if a 
 script has to be executed. The combination of app domain and event type determines a trigger. Each trigger is associated 
-with a scrpt that gets executed. 
+with a script that gets executed. 
 
 *NOTE: THE TRIGGERS FILE MUST BE NAMED *triggers.json**
 
