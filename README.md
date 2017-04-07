@@ -40,14 +40,14 @@ module.exports = {
 
 ## Triggers
 
-When cloudcode receives a [HTTP request] (#post-v1event), cloudcode looks up the *triggers* list to determine if a 
+When cloudcode receives a [HTTP request](#post-v1event), cloudcode looks up the *triggers* list to determine if a 
 script has to be executed. The combination of app domain and event type determines a trigger. Each trigger is associated 
 with a scrpt that gets executed. 
 
 *NOTE: THE TRIGGERS FILE MUST BE NAMED *triggers.json**
 
 On startup, cloudcode reads the triggers file, present in the configuration directory (same path as *config.json* file).
-The content of *triggers.json** file should be an array of JSON objects - each JSON object has the following keys
+The content of **triggers.json** file should be an array of JSON objects - each JSON object has the following keys
 
  - appDomain  
  - eventType
