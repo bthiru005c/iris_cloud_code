@@ -54,17 +54,22 @@ if (config.ssl_enabled) {
 	app.set('port', process.env.PORT || 9000);
 }
 
-// read triggers file
-var triggers = fs.readFileSync("./triggers/triggers.json")
-// unmarshall to JSON type
-var jsonTriggers = JSON.parse(triggers);
-if (jsonTriggers instanceof Array) {
-	for(var i = 0 , len = jsonTriggers.length ; i < len ; i++){
-		require(jsonTriggers[i].scriptFile)(scripts_modules);
-		irisEventTriggers.addTrigger(jsonTriggers[i].appDomain, jsonTriggers[i].eventType, jsonTriggers[i].scriptFile);
+try {
+	// read triggers file
+	var triggers = fs.readFileSync("./configuration/triggers.json")
+	// unmarshall to JSON type
+	var jsonTriggers = JSON.parse(triggers);
+	if (jsonTriggers instanceof Array) {
+		for(var i = 0 , len = jsonTriggers.length ; i < len ; i++){
+			require(jsonTriggers[i].scriptFile)(scripts_modules);
+			irisEventTriggers.addTrigger(jsonTriggers[i].appDomain, jsonTriggers[i].eventType, jsonTriggers[i].scriptFile);
+		}
+	} else {
+		logger.error("./configuration/triggers.json does not contain array of JSON objects");
 	}
-} else {
-	logger.error("./triggers/triggers.json does not contain array of JSON objects");
+} catch (err) {
+	logger.error("Type=ntmTriggersJsonFileReadFailure, Message=" + err + " ; Unable to read triggers.json file " +  config.jwt_file + " ; Iris CloudCode Exiting...." );
+	process.exit(1);	
 }
 
 // 
