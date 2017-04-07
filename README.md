@@ -5,8 +5,6 @@
 The following is the template for configuration file (in JSON format) that is read by the application, at startup. The file
 name *MUST* be *config.js* and *MUST* reside in the directory named *configuration*.
 
-*NOTE: TRIGGERS ARE NO LONGER A PART OF SOFTWARE RELEASES. IT IS IMPORTANT TO ADD THE TRIGGERS IN A FILE, IN JSON FORMAT, IN THE CONFIGURATION DIRECTORY*
-
 ```sh
 module.exports = {
 	development: {},
@@ -39,6 +37,53 @@ module.exports = {
 	}	
 };
 ```
+
+## Triggers
+
+When cloudcode receives a [HTTP request] (#post-v1event), cloudcode looks up the *triggers* list to determine if a 
+script has to be executed. The combination of app domain and event type determines a trigger. Each trigger is associated 
+with a scrpt that gets executed. 
+
+*NOTE: THE TRIGGERS FILE MUST BE NAMED *triggers.json**
+
+On startup, cloudcode reads the triggers file, present in the configuration directory (same path as *config.json* file).
+The content of *triggers.json** file should be an array of JSON objects - each JSON object has the following keys
+
+ - appDomain  
+ - eventType
+ - scriptFile - This is a javascript file that gets executed when cloudcode receives the HTTP request with the same
+                app domain ad event type it is associated with.
+ 
+
+Here's an example of the contents of *triggers.json* file
+
+```sh
+[{
+    "appDomain": "xfinityhome.comcast.com",
+    "eventType": "firstxmppparticipantjoined",
+    "scriptFile": "/usr/local/iris_cloud_code/scripts/xmpp.js"
+},
+{
+    "appDomain": "iristest.comcast.com",
+    "eventType": "firstxmppparticipantjoined",
+    "scriptFile": "/usr/local/iris_cloud_code/scripts/xmpp.js"
+},
+{
+    "appDomain": "iristest.comcast.com",
+    "eventType": "pstnparticipantjoined",
+    "scriptFile": "/usr/local/iris_cloud_code/scripts/xmpp.js"
+},
+{
+    "appDomain": "xfinityvoice.comcast.com",
+    "eventType": "firstxmppparticipantjoined",
+    "scriptFile": "/usr/local/iris_cloud_code/scripts/xmpp.js"
+},
+{
+    "appDomain": "xfinityvoice.comcast.com",
+    "eventType": "pstnparticipantjoined",
+    "scriptFile": "/usr/local/iris_cloud_code/scripts/xmpp.js"
+}]
+``` 
 
 ## APIS
 
