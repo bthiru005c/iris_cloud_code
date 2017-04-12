@@ -61,27 +61,27 @@ Here's an example of the contents of *triggers.json* file
 [{
     "appDomain": "xfinityhome.comcast.com",
     "eventType": "firstxmppparticipantjoined",
-    "scriptFile": "/usr/local/iris_cloud_code/scripts/xmpp.js"
+    "scriptFile": "/usr/local/iris_cloud_code/configuration/scripts/xmpp.js"
 },
 {
     "appDomain": "iristest.comcast.com",
     "eventType": "firstxmppparticipantjoined",
-    "scriptFile": "/usr/local/iris_cloud_code/scripts/xmpp.js"
+    "scriptFile": "/usr/local/iris_cloud_code/scripts/configuration/xmpp.js"
 },
 {
     "appDomain": "iristest.comcast.com",
     "eventType": "pstnparticipantjoined",
-    "scriptFile": "/usr/local/iris_cloud_code/scripts/xmpp.js"
+    "scriptFile": "/usr/local/iris_cloud_code/scripts/configuration/xmpp.js"
 },
 {
     "appDomain": "xfinityvoice.comcast.com",
     "eventType": "firstxmppparticipantjoined",
-    "scriptFile": "/usr/local/iris_cloud_code/scripts/xmpp.js"
+    "scriptFile": "/usr/local/iris_cloud_code/scripts/configuration/xmpp.js"
 },
 {
     "appDomain": "xfinityvoice.comcast.com",
     "eventType": "pstnparticipantjoined",
-    "scriptFile": "/usr/local/iris_cloud_code/scripts/xmpp.js"
+    "scriptFile": "/usr/local/iris_cloud_code/scripts/configuration/xmpp.js"
 }]
 ``` 
 
