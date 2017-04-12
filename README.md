@@ -17,7 +17,7 @@ module.exports = {
 		ssl_certificate: '/opt/certs/rtc.crt',                                      <--- absolute/relative PATH + cert file - relative PATH starts from the base directory		
 		event_manager: 'https://<CNAME/FQDN>',                                      <--- CNAME/FQDN OF EVENT MANAGER - MUST START WITH SCHEME (HTTP:// or HTTPS://)
 		notification_manager: 'https://<CNAME/FQDN>',                               <--- CNAME/FQDN OF NOTIFICATION MANAGER - MUST START WITH SCHEME (HTTP:// or HTTPS://)
-		jwt_file: '/usr/local/iris_cloud_code/configuration/server_jwt.txt'         <--- FILE MUST CONTAIN A JWT WITH SCOPE "iris server". ALTHOUGH NOT MANDATORY, DO NOT CHANGE THE PATH AND FILE NAME
+		jwt_file: '/usr/local/iris_cloud_code/configuration/core_jwt.txt'           <--- FILE MUST CONTAIN A JWT WITH TYPE "Core". ALTHOUGH NOT MANDATORY, DO NOT CHANGE THE PATH AND FILE NAME
 		aum: "https://<CNAME/FQDN>/jwtkeys",                                        <-- CNAME/FQDN OF AUTH MANAGER - MUST START WITH SCHEME (HTTP:// or HTTPS://)
 		// Logging configuration
 		log: {                                                                      <--- DO NOT TOUCH. LEAVE THIS ENTIRE OBJECT AS IS
@@ -46,7 +46,7 @@ with a script that gets executed.
 
 *NOTE: THE TRIGGERS FILE MUST BE NAMED *triggers.json**
 
-On startup, cloudcode reads the triggers file, present in the configuration directory (same path as *config.json* file).
+On startup, cloudcode reads the triggers file */usr/local/iris_cloud_code/triggers/triggers.json*.
 The content of **triggers.json** file should be an array of JSON objects - each JSON object has the following keys
 
  - **appDomain**  
@@ -61,27 +61,27 @@ Here's an example of the contents of *triggers.json* file
 [{
     "appDomain": "xfinityhome.comcast.com",
     "eventType": "firstxmppparticipantjoined",
-    "scriptFile": "/usr/local/iris_cloud_code/configuration/scripts/xmpp.js"
+    "scriptFile": "/usr/local/iris_cloud_code/scripts/xmpp.js"
 },
 {
     "appDomain": "iristest.comcast.com",
     "eventType": "firstxmppparticipantjoined",
-    "scriptFile": "/usr/local/iris_cloud_code/scripts/configuration/xmpp.js"
+    "scriptFile": "/usr/local/iris_cloud_code/scripts/xmpp.js"
 },
 {
     "appDomain": "iristest.comcast.com",
     "eventType": "pstnparticipantjoined",
-    "scriptFile": "/usr/local/iris_cloud_code/scripts/configuration/xmpp.js"
+    "scriptFile": "/usr/local/iris_cloud_code/scripts/xmpp.js"
 },
 {
     "appDomain": "xfinityvoice.comcast.com",
     "eventType": "firstxmppparticipantjoined",
-    "scriptFile": "/usr/local/iris_cloud_code/scripts/configuration/xmpp.js"
+    "scriptFile": "/usr/local/iris_cloud_code/scripts/xmpp.js"
 },
 {
     "appDomain": "xfinityvoice.comcast.com",
     "eventType": "pstnparticipantjoined",
-    "scriptFile": "/usr/local/iris_cloud_code/scripts/configuration/xmpp.js"
+    "scriptFile": "/usr/local/iris_cloud_code/scripts/xmpp.js"
 }]
 ``` 
 
