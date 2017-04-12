@@ -13,6 +13,12 @@ services:
     # The following line indicates HOST path which contains the config file required by cloud code
     - /opt/config/cloud_code:/usr/local/iris_cloud_code/configuration
     #
+    # The following line indicates HOST path which contains all the script files
+    - /opt/config/cloud_code/scripts:/usr/local/iris_cloud_code/scripts
+    #
+    # The following line indicates HOST path which contains triggers.json file
+    - /opt/config/cloud_code/triggers:/usr/local/iris_cloud_code/triggers
+    #
     # The following line indicates HOST path which contains the log files generated cloud code
     - /var/log/iris_cloud_code:/usr/local/iris_cloud_code/log
     #
