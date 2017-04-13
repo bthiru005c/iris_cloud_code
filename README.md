@@ -38,7 +38,13 @@ module.exports = {
 };
 ```
 
-## Triggers
+## Triggers & Scripts
+
+All triggers and scripts should be pulled from [here](https://github.com/Comcast/iris_clc_scripts). The orchestration process
+*MUST* create folders *scripts* and *triggers* in */usr/local/iris_cloud_code*, download the script files to *scripts* folder 
+and triggers.json file to *triggers* folder
+
+### Triggers
 
 When cloudcode receives a [HTTP request](#post-v1event), cloudcode looks up the *triggers* list to determine if a 
 script has to be executed. The combination of app domain and event type determines a trigger. Each trigger is associated 
@@ -84,6 +90,11 @@ Here's an example of the contents of *triggers.json* file
     "scriptFile": "/usr/local/iris_cloud_code/scripts/xmpp.js"
 }]
 ``` 
+
+### Scripts
+
+On startup, cloudcode uploads ALL script files associated with the triggers in the triggers file */usr/local/iris_cloud_code/triggers/triggers.json*
+from */usr/local/iris_cloud_code/scripts* directory
 
 ## APIS
 
