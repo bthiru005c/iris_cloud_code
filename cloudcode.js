@@ -68,7 +68,7 @@ try {
 		logger.error("./configuration/triggers.json does not contain array of JSON objects");
 	}
 } catch (err) {
-	logger.error("Type=ntmTriggersJsonFileReadFailure, Message=" + err + " ; Unable to read triggers.json file " +  config.jwt_file + " ; Iris CloudCode Exiting...." );
+	logger.error("Type=clcTriggersJsonFileReadFailure, Message=" + err + " ; Unable to read triggers.json file " +  config.jwt_file + " ; Iris CloudCode Exiting...." );
 	process.exit(1);	
 }
 
