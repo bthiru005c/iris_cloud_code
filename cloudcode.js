@@ -13,27 +13,27 @@ var env = process.env.NODE_ENV || 'development'
 
 var app = express();
 
-var iris_server_jwt;
+var iris_core_jwt;
 
 // read jwt file periodically
-(function get_iris_server_jwt() {
+(function get_iris_core_jwt() {
 	try {
 		data = fs.readFileSync(config.jwt_file, "utf8");
 		var lines = data.split(/\r\n|\r|\n/);
 		if (lines.length != 2) {
 			logger.error("Type=JwtFile, Message=jwt file " + config.jwt_file + " has " + lines.length + " lines - should contain only one line ; Iris CloudCode Exiting...." );
-			process.exit(1);	
-		} 
+			process.exit(1);
+		}
 		// else do nothing
 		// copy the JWT
-		iris_server_jwt = lines[0];
+		iris_core_jwt = lines[0];
 		// Call the same function again every 30 seconds
 		setTimeout(function () {
-			get_iris_server_jwt();
+			get_iris_core_jwt();
 		}, 30*1000);
 	} catch (err) {
 	  	logger.error("Type=ntmJwtFileReadFailure, Message=" + err + " ; Unable to read jwt file " +  config.jwt_file + " ; Iris CloudCode Exiting...." );
-	  	process.exit(1);	
+	  	process.exit(1);
 	}
 })();
 
@@ -69,17 +69,17 @@ try {
 	}
 } catch (err) {
 	logger.error("Type=clcTriggersJsonFileReadFailure, Message=" + err + " ; Unable to read triggers.json file " +  config.jwt_file + " ; Iris CloudCode Exiting...." );
-	process.exit(1);	
+	process.exit(1);
 }
 
-// 
+//
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
 app.get('/v1/version', api.version);
 
-// ALL APIs below must be validated 
+// ALL APIs below must be validated
 app.use(validateJwt.verify);
 // APIs
 app.post('/v1/event', api.processEvent);
@@ -127,7 +127,7 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 exports.config = config;
-/* 
+/*
  *  The following SO link
  *  http://stackoverflow.com/questions/7381802/node-modules-exporting-a-variable-versus-exporting-functions-that-reference-it
  *  explains why passing by reference (not value) is correct
@@ -135,6 +135,6 @@ exports.config = config;
 Object.defineProperty(exports, "scripts_modules", {
   get: function() { return scripts_modules; }
 });
-Object.defineProperty(exports, "iris_server_jwt", {
-  get: function() { return iris_server_jwt; }
+Object.defineProperty(exports, "iris_core_jwt", {
+  get: function() { return iris_core_jwt; }
 });

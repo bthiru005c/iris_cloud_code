@@ -20,7 +20,7 @@ RUN chmod 700 /root/.ssh/id_rsa && echo "Host github.com\n\tStrictHostKeyCheckin
 # Install Event Manager
 WORKDIR /usr/local
 #RUN git clone git@github.com:iris-platform/iris_cloud_code.git
-RUN git clone -b v1.0.21 git@github.com:iris-platform/iris_cloud_code.git
+RUN git clone -b v1.0.22 git@github.com:iris-platform/iris_cloud_code.git
 RUN rm -rf /usr/local/iris_cloud_code/.git
 WORKDIR /usr/local/iris_cloud_code
 RUN npm install
